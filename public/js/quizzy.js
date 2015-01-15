@@ -2,15 +2,37 @@
 
   window.QuizzyApp = {}
 
+  //the Todo class has two properties
+  QuizzyApp.quiz = function(data) {
+    console.log("quiz data")
+    console.log(data)
+    this.id = m.prop(data.id)
+    this.question = m.prop(data.question)
+    this.responses = m.prop(data.responses)
+    this.answer = m.prop(data.answer)
+  }
+
   // view-model
   QuizzyApp.vm = (function() {
     var vm = {}
 
     vm.init = function() {
       // list of quizzes
-      vm.quizzes = m.prop(quizzes[0])
+      vm.quizzes = data //m.prop(QuizzyApp.quizzes)
+      // quiz = new QuizzyApp.quiz(data[0])
+      // console.log(quiz)
+      // vm.quizzes.push(quiz)
+
+
+      vm.add = function() {
+        //if (vm.description()) {
+            vm.quizzes.push(new QuizzyApp.quiz(data));
+            //vm.quizzes.push({question: "Test?"})
+            //vm.description("");
+        //}
+      }
     }
-      return vm
+    return vm
   }())
 
   // the controller
@@ -21,29 +43,33 @@
   // the view
   QuizzyApp.view = function() {
     return m("html", [
-        m("body", [
-          m("div", [
-            m("label", QuizzyApp.vm.quizzes().question),
-            m("br"),
-            m("div", [
-              QuizzyApp.vm.quizzes().responses.map(function(resp, index) {
-                return m("tr", [
-                    m("td", [
-                      m("input[type=radio]", {checked: false}),
-                    ]),
-                    m("td", [
-                      m("label", QuizzyApp.vm.quizzes().responses[index])
-                    ]),
-                  ])
-              })
-            ] )
-          ])
-        ])
+      m("body", [
+        m("div", QuizzyApp.vm.quizzes.map(quizView)),
+        m("button", "Anwer Me!")
       ])
+    ])
+
+    function quizView (quiz) {  
+      return [
+        m("label", quiz.question),
+        quiz.responses.map(function(resp, index) {
+          return [
+            m("tr", [
+              m("td", [
+                m("input[type=radio]", {name: "response-" + quiz.id, checked: false}),
+              ]),
+              m("td", [
+                m("label", quiz.responses[index])
+              ]),
+            ])
+          ]
+        })
+      ]
+    }
   }
 
   // the data
-  var quizzes = [{
+  var data = [{
               id: 100,
               question: "How much wood would a woodchuck chuck?",
               responses: [
