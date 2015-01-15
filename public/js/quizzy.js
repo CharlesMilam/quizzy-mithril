@@ -25,8 +25,18 @@
           m("div", [
             m("label", QuizzyApp.vm.quizzes().question),
             m("br"),
-            m("input[type=radio]", {checked: false}),
-            m("label", QuizzyApp.vm.quizzes().responses[3])
+            m("div", [
+              QuizzyApp.vm.quizzes().responses.map(function(resp, index) {
+                return m("tr", [
+                    m("td", [
+                      m("input[type=radio]", {checked: false}),
+                    ]),
+                    m("td", [
+                      m("label", QuizzyApp.vm.quizzes().responses[index])
+                    ]),
+                  ])
+              })
+            ] )
           ])
         ])
       ])
