@@ -24,6 +24,18 @@
     vm.checkResponses = function(e) {
       console.log("in check responses")
       console.log(e)
+      vm.quizzes.forEach (function (quiz) {
+        vm.userResponses.forEach (function (resp) {
+          console.log(quiz.id)
+          console.log(resp.quiz)
+          console.log(quiz.answer)
+          console.log(resp.resp)
+          if (quiz.id == resp.quiz && quiz.answer == resp.resp) {
+            console.log("success")
+          }
+        })
+
+      })
     }
     return vm
   }())
@@ -53,7 +65,7 @@
             m("tr", [
               m("td", [
                 //m("input[type=radio]", {name: "response-" + quiz.id, checked: false}),
-                m("input[type=radio]", {onchange: getResponses.bind(this, {quiz: quiz.id, resp: index}), name: "response-" + quiz.id, checked: false}),
+                m("input[type=radio]", {onchange: getResponses.bind(this, {quiz: quiz.id, resp: index}), name: "response-" + quiz.id, id: quiz.id}),
               ]),
               m("td", [
                 m("label", quiz.responses[index])
