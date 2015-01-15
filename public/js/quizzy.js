@@ -18,12 +18,19 @@
       // list of quizzes
       vm.quizzes = data 
     }
+
+    vm.checkResponses = function(e) {
+      console.log("in check responses")
+      console.log(e)
+    }
     return vm
   }())
 
   // the controller
   QuizzyApp.controller = function() {
     QuizzyApp.vm.init()
+
+
   }
 
   // the view
@@ -31,7 +38,7 @@
     return m("html", [
       m("body", [
         m("div", QuizzyApp.vm.quizzes.map(quizView)),
-        m("button", "Anwer Me!")
+        m("button", {onclick: QuizzyApp.vm.checkResponses.bind(QuizzyApp.vm, "test")}, "Anwer Me!")
       ])
     ])
 
@@ -42,7 +49,7 @@
           return [
             m("tr", [
               m("td", [
-                m("input[type=radio]", {name: "response-" + quiz.id, checked: false}),
+                m("input[type=radio]", {onchange: getResponses.bind(this, "test"), name: "response-" + quiz.id, checked: false}),
               ]),
               m("td", [
                 m("label", quiz.responses[index])
@@ -51,6 +58,11 @@
           ]
         })
       ]
+    }
+    function getResponses (resp) {
+      var userResponses = []
+      console.log("in get responses")
+      console.log(resp)
     }
   }
 
