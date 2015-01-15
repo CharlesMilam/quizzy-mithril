@@ -4,8 +4,6 @@
 
   //the Todo class has two properties
   QuizzyApp.quiz = function(data) {
-    console.log("quiz data")
-    console.log(data)
     this.id = m.prop(data.id)
     this.question = m.prop(data.question)
     this.responses = m.prop(data.responses)
@@ -18,19 +16,7 @@
 
     vm.init = function() {
       // list of quizzes
-      vm.quizzes = data //m.prop(QuizzyApp.quizzes)
-      // quiz = new QuizzyApp.quiz(data[0])
-      // console.log(quiz)
-      // vm.quizzes.push(quiz)
-
-
-      vm.add = function() {
-        //if (vm.description()) {
-            vm.quizzes.push(new QuizzyApp.quiz(data));
-            //vm.quizzes.push({question: "Test?"})
-            //vm.description("");
-        //}
-      }
+      vm.quizzes = data 
     }
     return vm
   }())
