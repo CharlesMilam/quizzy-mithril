@@ -19,6 +19,8 @@
       vm.quizzes = data 
     }
 
+    vm.userResponses = []
+
     vm.checkResponses = function(e) {
       console.log("in check responses")
       console.log(e)
@@ -39,6 +41,7 @@
       m("body", [
         m("div", QuizzyApp.vm.quizzes.map(quizView)),
         m("button", {onclick: QuizzyApp.vm.checkResponses.bind(QuizzyApp.vm, "test")}, "Anwer Me!")
+        //m("button", {onclick: QuizzyApp.vm.userResponses.push({quiz: name})}, "Anwer Me!")
       ])
     ])
 
@@ -49,7 +52,8 @@
           return [
             m("tr", [
               m("td", [
-                m("input[type=radio]", {onchange: getResponses.bind(this, "test"), name: "response-" + quiz.id, checked: false}),
+                //m("input[type=radio]", {name: "response-" + quiz.id, checked: false}),
+                m("input[type=radio]", {onchange: getResponses.bind(this, {quiz: quiz.id, resp: index}), name: "response-" + quiz.id, checked: false}),
               ]),
               m("td", [
                 m("label", quiz.responses[index])
@@ -60,9 +64,10 @@
       ]
     }
     function getResponses (resp) {
-      var userResponses = []
+      // var userResponses = []
+      QuizzyApp.vm.userResponses.push(resp)
       console.log("in get responses")
-      console.log(resp)
+      console.log(QuizzyApp.vm.userResponses)
     }
   }
 
