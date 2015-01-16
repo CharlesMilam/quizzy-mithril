@@ -16,11 +16,11 @@
 
     vm.init = function() {
       // list of quizzes
-      vm.quizzes = data 
+      vm.quizzes = data
     }
 
     vm.userResponses = []
-    vm.user = m.prop()
+    vm.user = m.prop("")
     vm.stats = []
 
     vm.checkResponses = function(e) {
@@ -32,7 +32,7 @@
           console.log(resp.quiz)
           console.log(quiz.answer)
           console.log(resp.resp)
-          console.log(vm.user)
+          console.log(vm.user())
           if (quiz.id == resp.quiz && quiz.answer == resp.resp) {
             console.log("success")
           }
@@ -55,13 +55,13 @@
     return m("html", [
       m("body", [
         //{onchange: m.withAttr("value", todo.vm.description),
-        m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.user())}),
+        m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.user), value: QuizzyApp.vm.user()}),
         m("div", QuizzyApp.vm.quizzes.map(quizView)),
-        m("button", {onclick: QuizzyApp.vm.checkResponses.bind(QuizzyApp.vm, "success")}, "Anwer Me!")
+        m("button", {onclick: QuizzyApp.vm.checkResponses.bind(QuizzyApp.vm, "checking responses")}, "Anwer Me!")
       ])
     ])
 
-    function quizView (quiz) {  
+    function quizView (quiz) {
       return [
         m("label", quiz.question),
         quiz.responses.map(function(resp, index) {
