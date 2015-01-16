@@ -22,6 +22,7 @@
     vm.userResponses = []
     vm.user = m.prop("")
     vm.stats = []
+    vm.highScore = 0
 
     vm.checkResponses = function(e) {
       console.log("in check responses")
@@ -33,11 +34,21 @@
           console.log(quiz.answer)
           console.log(resp.resp)
           console.log(vm.user())
+          var correct = 0
           if (quiz.id == resp.quiz && quiz.answer == resp.resp) {
             console.log("success")
+            correct++
+            vm.stats.push({questionId: quiz.id,
+              user: vm.user()
+            })
+            if (correct > vm.highScore) {
+              vm.highScore = correct
+            }
           }
         })
-
+        console.log("stats")
+        console.log(vm.stats)
+        console.log(vm.highScore)
       })
     }
     return vm
