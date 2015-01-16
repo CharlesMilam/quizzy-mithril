@@ -2,7 +2,7 @@
 
   window.QuizzyApp = {}
 
-  //the Todo class has two properties
+  //the app
   QuizzyApp.quiz = function(data) {
     this.id = m.prop(data.id)
     this.question = m.prop(data.question)
