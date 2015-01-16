@@ -48,6 +48,7 @@
               vm.highScore = correct
           }
         var correctAnswers = vm.generateStats()
+        vm.resetQuiz()
         console.log("stats")
         console.log(vm.stats)
         console.log(vm.highScore)
@@ -58,6 +59,12 @@
     vm.generateStats = function() {
       var correctAnswers = vm.stats.length
       return correctAnswers
+    }
+
+    vm.resetQuiz = function() {
+      vm.user().value = ""
+      vm.userResponses = []
+      vm.stats = []
     }
 
     return vm
