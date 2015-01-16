@@ -27,6 +27,7 @@
     vm.checkResponses = function(e) {
       console.log("in check responses")
       console.log(e)
+      var correct = 0
       vm.quizzes.forEach (function (quiz) {
         vm.userResponses.forEach (function (resp) {
           console.log(quiz.id)
@@ -34,18 +35,18 @@
           console.log(quiz.answer)
           console.log(resp.resp)
           console.log(vm.user())
-          var correct = 0
+
           if (quiz.id == resp.quiz && quiz.answer == resp.resp) {
             console.log("success")
             correct++
             vm.stats.push({questionId: quiz.id,
               user: vm.user()
             })
-            if (correct > vm.highScore) {
-              vm.highScore = correct
-            }
           }
         })
+        if (correct > vm.highScore) {
+              vm.highScore = correct
+          }
         console.log("stats")
         console.log(vm.stats)
         console.log(vm.highScore)
@@ -68,9 +69,15 @@
         //{onchange: m.withAttr("value", todo.vm.description),
         m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.user), value: QuizzyApp.vm.user()}),
         m("div", QuizzyApp.vm.quizzes.map(quizView)),
-        m("button", {onclick: QuizzyApp.vm.checkResponses.bind(QuizzyApp.vm, "checking responses")}, "Anwer Me!")
-      ])
-    ])
+        m("button", {onclick: QuizzyApp.vm.checkResponses.bind(QuizzyApp.vm, "checking responses")}, "Anwer Me!"),
+        m(".statsContainer", [
+          m("label", "High Score: "),
+          m("label", QuizzyApp.vm.highScore),
+          m("br"),
+          m("label", "Correct Answers: ")
+        ]) // statsContainer ends
+      ]) // body ends
+    ]) // html ends
 
     function quizView (quiz) {
       return [
