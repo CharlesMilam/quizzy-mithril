@@ -1,9 +1,9 @@
 (function () {
-
+  // the app
   window.QuizzyApp = {}
 
   //the app
-  QuizzyApp.quiz = function(data) {
+  QuizzyApp.question = function(data) {
     this.id = m.prop(data.id)
     this.question = m.prop(data.question)
     this.responses = m.prop(data.responses)
@@ -99,17 +99,17 @@
       ]) // body ends
     ]) // html ends
 
-    function quizView (quiz) {
+    function quizView (question) {
       return [
-        m("label", quiz.question),
-        quiz.responses.map(function(resp, index) {
+        m("label", question.question),
+        question.responses.map(function(resp, index) {
           return [
             m("tr", [
               m("td", [
-                m("input[type=radio]", {onchange: getResponses.bind(this, {question: quiz.id, resp: index}), name: "response-" + quiz.id, id: quiz.id}),
+                m("input[type=radio]", {onchange: getResponses.bind(this, {question: question.id, resp: index}), name: "response-" + question.id, id: question.id}),
               ]),
               m("td", [
-                m("label", quiz.responses[index])
+                m("label", question.responses[index])
               ]),
             ]),
           ]
