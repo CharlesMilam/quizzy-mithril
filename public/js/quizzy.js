@@ -15,8 +15,8 @@
     var vm = {}
 
     vm.init = function() {
-      // list of quizzes
-      vm.quizzes = data
+      // list of questions
+      vm.questions = data
     }
 
     vm.userResponses = []
@@ -28,18 +28,18 @@
       console.log("in check responses")
       console.log(e)
       var correct = 0
-      vm.quizzes.forEach (function (quiz) {
+      vm.questions.forEach (function (question) {
         vm.userResponses.forEach (function (resp) {
-          console.log(quiz.id)
-          console.log(resp.quiz)
-          console.log(quiz.answer)
+          console.log(question.id)
+          console.log(resp.question)
+          console.log(question.answer)
           console.log(resp.resp)
           console.log(vm.user())
 
-          if (quiz.id == resp.quiz && quiz.answer == resp.resp) {
+          if (question.id == resp.question && question.answer == resp.resp) {
             console.log("success")
             correct++
-            vm.stats.push({questionId: quiz.id,
+            vm.stats.push({questionId: question.id,
               user: vm.user()
             })
           }
@@ -77,7 +77,7 @@
         //{onchange: m.withAttr("value", todo.vm.description),
         m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.user), value: QuizzyApp.vm.user()}),
         m("br"),
-        m("div", QuizzyApp.vm.quizzes.map(quizView)),
+        m("div", QuizzyApp.vm.questions.map(quizView)),
         m("button", {onclick: QuizzyApp.vm.checkResponses.bind(QuizzyApp.vm, "checking responses")}, "Anwer Me!"),
         m("br"),
         m(".statsContainer", [
@@ -97,7 +97,7 @@
           return [
             m("tr", [
               m("td", [
-                m("input[type=radio]", {onchange: getResponses.bind(this, {quiz: quiz.id, resp: index}), name: "response-" + quiz.id, id: quiz.id}),
+                m("input[type=radio]", {onchange: getResponses.bind(this, {question: quiz.id, resp: index}), name: "response-" + quiz.id, id: quiz.id}),
               ]),
               m("td", [
                 m("label", quiz.responses[index])
