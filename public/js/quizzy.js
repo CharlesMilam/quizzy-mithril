@@ -78,8 +78,8 @@
         m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.user), value: QuizzyApp.vm.user()}),
         m("br"),
         m("div", QuizzyApp.vm.quizzes.map(quizView)),
-        m("br"),
         m("button", {onclick: QuizzyApp.vm.checkResponses.bind(QuizzyApp.vm, "checking responses")}, "Anwer Me!"),
+        m("br"),
         m(".statsContainer", [
           m("label", "High Score: "),
           m("label", QuizzyApp.vm.highScore),
