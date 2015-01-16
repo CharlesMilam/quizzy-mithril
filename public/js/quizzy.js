@@ -47,11 +47,19 @@
         if (correct > vm.highScore) {
               vm.highScore = correct
           }
+        var correctAnswers = vm.generateStats()
         console.log("stats")
         console.log(vm.stats)
         console.log(vm.highScore)
+        console.log(correctAnswers)
       })
     }
+
+    vm.generateStats = function() {
+      var correctAnswers = vm.stats.length
+      return correctAnswers
+    }
+
     return vm
   }())
 
@@ -74,7 +82,8 @@
           m("label", "High Score: "),
           m("label", QuizzyApp.vm.highScore),
           m("br"),
-          m("label", "Correct Answers: ")
+          m("label", "Correct Answers: "),
+          m("label", QuizzyApp.vm.generateStats())
         ]) // statsContainer ends
       ]) // body ends
     ]) // html ends
@@ -96,6 +105,7 @@
         })
       ]
     }
+
     function getResponses (resp) {
       // var userResponses = []
       QuizzyApp.vm.userResponses.push(resp)
