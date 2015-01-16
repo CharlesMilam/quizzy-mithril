@@ -2,7 +2,7 @@
   // the app
   window.QuizzyApp = {}
 
-  //the app
+  //a question
   QuizzyApp.question = function(data) {
     this.id = m.prop(data.id)
     this.question = m.prop(data.question)
@@ -19,23 +19,18 @@
       vm.questions = data
     }
 
+    // various properties needed for stats TODO: refactor as an object
     vm.userResponses = []
     vm.user = m.prop("")
     vm.stats = []
     vm.highScore = 0
 
+    // determine correct answers based on user's responses
     vm.checkResponses = function(e) {
-      console.log("in check responses")
-      console.log(e)
       var correct = 0
+      // TODO: refactor to use map and reduce
       vm.questions.forEach (function (question) {
         vm.userResponses.forEach (function (resp) {
-          console.log(question.id)
-          console.log(resp.question)
-          console.log(question.answer)
-          console.log(resp.resp)
-          console.log(vm.user())
-
           if (question.id == resp.question && question.answer == resp.resp) {
             console.log("success")
             correct++
@@ -44,24 +39,22 @@
             })
           }
         })
+        // is the number correct a new high score
         if (correct > vm.highScore) {
-              vm.highScore = correct
-          }
+          vm.highScore = correct
+        }
+        // generate the stats
         var correctAnswers = vm.generateStats()
-
-        console.log("stats")
-        console.log(vm.stats)
-        console.log(vm.highScore)
-        console.log(correctAnswers)
       })
+      // reset quiz values for next round TODO: make it work
       //vm.resetQuiz()
     }
-
+    // generates stats
     vm.generateStats = function() {
       var correctAnswers = vm.stats.length
       return correctAnswers
     }
-
+    // resets the quiz
     vm.resetQuiz = function() {
       console.log("in reset")
       vm.user("")
@@ -75,15 +68,12 @@
   // the controller
   QuizzyApp.controller = function() {
     QuizzyApp.vm.init()
-
-
   }
 
   // the view
   QuizzyApp.view = function() {
     return m("html", [
       m("body", [
-        //{onchange: m.withAttr("value", todo.vm.description),
         m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.user), value: QuizzyApp.vm.user()}),
         m("br"),
         m("div", QuizzyApp.vm.questions.map(quizView)),
@@ -99,6 +89,7 @@
       ]) // body ends
     ]) // html ends
 
+    // helper function to generate a question and its responses
     function quizView (question) {
       return [
         m("label", question.question),
@@ -118,11 +109,9 @@
       ]
     }
 
+    // helper function to gather user's responses
     function getResponses (resp) {
-      // var userResponses = []
       QuizzyApp.vm.userResponses.push(resp)
-      console.log("in get responses")
-      console.log(QuizzyApp.vm.userResponses)
     }
   }
 
