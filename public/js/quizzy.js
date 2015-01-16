@@ -20,6 +20,8 @@
     }
 
     vm.userResponses = []
+    vm.user = m.prop()
+    vm.stats = []
 
     vm.checkResponses = function(e) {
       console.log("in check responses")
@@ -30,6 +32,7 @@
           console.log(resp.quiz)
           console.log(quiz.answer)
           console.log(resp.resp)
+          console.log(vm.user)
           if (quiz.id == resp.quiz && quiz.answer == resp.resp) {
             console.log("success")
           }
@@ -51,9 +54,10 @@
   QuizzyApp.view = function() {
     return m("html", [
       m("body", [
+        //{onchange: m.withAttr("value", todo.vm.description),
+        m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.user())}),
         m("div", QuizzyApp.vm.quizzes.map(quizView)),
-        m("button", {onclick: QuizzyApp.vm.checkResponses.bind(QuizzyApp.vm, "test")}, "Anwer Me!")
-        //m("button", {onclick: QuizzyApp.vm.userResponses.push({quiz: name})}, "Anwer Me!")
+        m("button", {onclick: QuizzyApp.vm.checkResponses.bind(QuizzyApp.vm, "success")}, "Anwer Me!")
       ])
     ])
 
@@ -64,7 +68,6 @@
           return [
             m("tr", [
               m("td", [
-                //m("input[type=radio]", {name: "response-" + quiz.id, checked: false}),
                 m("input[type=radio]", {onchange: getResponses.bind(this, {quiz: quiz.id, resp: index}), name: "response-" + quiz.id, id: quiz.id}),
               ]),
               m("td", [
