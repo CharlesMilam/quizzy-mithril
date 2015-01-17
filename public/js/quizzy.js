@@ -23,12 +23,10 @@
     var vm = {}
 
     vm.init = function() {
-      console.log("in init")
       // list of questions
       vm.questions = data
-      // prep stats
+      // quiz stats
       vm.stats = new QuizzyApp.stats({userResponses: [], user: "", corrects: [], highScore: 0})
-      console.log(vm.stats.highScore())
     }
 
     // determine correct answers based on user's responses
@@ -49,8 +47,8 @@
           }
         })
         // is the number correct a new high score
-        if (correct > vm.highScore) {
-          vm.highScore = correct
+        if (correct > vm.stats.highScore()) {
+          vm.stats.highScore(correct)
         }
         // generate the stats
         var correctAnswers = vm.generateStats()
@@ -60,8 +58,7 @@
     }
     // generates stats
     vm.generateStats = function() {
-      var correctAnswers = vm.stats.length
-      return correctAnswers
+      return vm.stats.corrects().length
     }
     // resets the quiz
     vm.resetQuiz = function() {
