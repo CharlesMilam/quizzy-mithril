@@ -88,7 +88,7 @@
         m("br"),
         m(".statsContainer", [
           m("label", "High Score: "),
-          m("label", QuizzyApp.vm.highScore),
+          m("label", QuizzyApp.vm.stats.highScore()),
           m("br"),
           m("label", "Correct Answers: "),
           m("label", QuizzyApp.vm.generateStats())
