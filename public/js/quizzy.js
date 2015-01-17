@@ -10,10 +10,10 @@
     this.answer = m.prop(data.answer)
   }
 
-  // various properties needed for stats TODO: refactor as an object
+  // various properties needed for stats 
   QuizzyApp.stats = function(args) {
-    this.userResponses = m.prop(args.userResponses)
     this.user = m.prop(args.user)
+    this.userResponses = m.prop(args.userResponses)
     this.corrects = m.prop(args.corrects)
     this.highScore = m.prop(args.highScore)
   }
@@ -30,12 +30,6 @@
       vm.stats = new QuizzyApp.stats({userResponses: [], user: "", corrects: [], highScore: 0})
       console.log(vm.stats.highScore())
     }
-
-    // various properties needed for stats TODO: refactor as an object
-    // vm.userResponses = []
-    // vm.user = m.prop("")
-    // vm.stats = []
-    // vm.highScore = 0
 
     // determine correct answers based on user's responses
     vm.checkResponses = function(e) {
