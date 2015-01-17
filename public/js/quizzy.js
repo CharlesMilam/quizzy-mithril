@@ -79,6 +79,7 @@
   // the view
   QuizzyApp.view = function() {
     return m("html", [
+      m("head"),
       m("body", [
         m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.stats.user), value: QuizzyApp.vm.stats.user()}),
         m("br"),
