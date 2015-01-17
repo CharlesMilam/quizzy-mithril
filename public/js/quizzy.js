@@ -80,7 +80,6 @@
   QuizzyApp.view = function() {
     return m("html", [
       m("body", [
-        //m("input", {onchange: m.withAttr("value", todo.vm.description), value: todo.vm.description()})
         m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.stats.user), value: QuizzyApp.vm.stats.user()}),
         m("br"),
         m("div", QuizzyApp.vm.questions.map(quizView)),
