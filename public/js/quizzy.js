@@ -79,7 +79,11 @@
   // the view
   QuizzyApp.view = function() {
     return m("html", [
-      m("head"),
+      m("head", [
+        m("title", "Quizzy - Mithrilized"),
+        //<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/css/foundation.css">
+        m("link", {rel: "stylesheet", href: "http://cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/css/foundation.css"})
+      ]),
       m("body", [
         m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.stats.user), value: QuizzyApp.vm.stats.user()}),
         m("br"),
