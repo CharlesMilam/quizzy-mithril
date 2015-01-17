@@ -10,33 +10,48 @@
     this.answer = m.prop(data.answer)
   }
 
+  // various properties needed for stats TODO: refactor as an object
+  QuizzyApp.stats = function(args) {
+    this.userResponses = m.prop(args.userResponses)
+    this.user = m.prop(args.user)
+    this.corrects = m.prop(args.corrects)
+    this.highScore = m.prop(args.highScore)
+  }
+
   // view-model
   QuizzyApp.vm = (function() {
     var vm = {}
 
     vm.init = function() {
+      console.log("in init")
       // list of questions
       vm.questions = data
+      // prep stats
+      vm.stats = new QuizzyApp.stats({userResponses: [], user: "", corrects: [], highScore: 0})
+      console.log(vm.stats.highScore())
     }
 
     // various properties needed for stats TODO: refactor as an object
-    vm.userResponses = []
-    vm.user = m.prop("")
-    vm.stats = []
-    vm.highScore = 0
+    // vm.userResponses = []
+    // vm.user = m.prop("")
+    // vm.stats = []
+    // vm.highScore = 0
 
     // determine correct answers based on user's responses
     vm.checkResponses = function(e) {
       var correct = 0
       // TODO: refactor to use map and reduce
       vm.questions.forEach (function (question) {
-        vm.userResponses.forEach (function (resp) {
+        vm.stats.userResponses().forEach (function (resp) {
           if (question.id == resp.question && question.answer == resp.resp) {
             console.log("success")
             correct++
-            vm.stats.push({questionId: question.id,
-              user: vm.user()
-            })
+            vm.stats.corrects().push(
+              {
+                questionId: question.id,
+                user: vm.stats.user()
+              }
+            )
           }
         })
         // is the number correct a new high score
@@ -74,7 +89,8 @@
   QuizzyApp.view = function() {
     return m("html", [
       m("body", [
-        m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.user), value: QuizzyApp.vm.user()}),
+        //m("input", {onchange: m.withAttr("value", todo.vm.description), value: todo.vm.description()})
+        m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.stats.user), value: QuizzyApp.vm.stats.user()}),
         m("br"),
         m("div", QuizzyApp.vm.questions.map(quizView)),
         m("button", {onclick: QuizzyApp.vm.checkResponses.bind(QuizzyApp.vm, "checking responses")}, "Anwer Me!"),
@@ -111,7 +127,7 @@
 
     // helper function to gather user's responses
     function getResponses (resp) {
-      QuizzyApp.vm.userResponses.push(resp)
+      QuizzyApp.vm.stats.userResponses().push(resp)
     }
   }
 
