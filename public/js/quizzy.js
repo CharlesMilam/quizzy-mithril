@@ -81,19 +81,15 @@
     return m("html", [
       m("head", [
         m("title", "Quizzy - Mithrilized"),
-        //<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/css/foundation.css">
         m("link", {rel: "stylesheet", href: "http://cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/css/foundation.css"})
       ]),
       m("body", [
         m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.stats.user), value: QuizzyApp.vm.stats.user()}),
-        m("br"),
-        m("div", QuizzyApp.vm.questions.map(quizView)),
+        m("div", {class: "questionsContainer"}, QuizzyApp.vm.questions.map(quizView)),
         m("button", {onclick: QuizzyApp.vm.checkResponses.bind(QuizzyApp.vm, "checking responses")}, "Anwer Me!"),
-        m("br"),
         m(".statsContainer", [
           m("label", "High Score: "),
           m("label", QuizzyApp.vm.stats.highScore()),
-          m("br"),
           m("label", "Correct Answers: "),
           m("label", QuizzyApp.vm.generateStats())
         ]) // statsContainer ends
@@ -109,15 +105,14 @@
             m("tr", [
               m("td", [
                 m("input[type=radio]", {onchange: getResponses.bind(this, {question: question.id, resp: index}), name: "response-" + question.id, id: question.id}),
-              ]),
+              ]), // td ends
               m("td", [
                 m("label", question.responses[index])
-              ]),
-            ]),
-          ]
-        }),
-       m("br")
-      ]
+              ]), // td ends
+            ]), // tr ends
+          ] // map return ends
+        }), // map ends
+      ] // quizView return ends
     }
 
     // helper function to gather user's responses
