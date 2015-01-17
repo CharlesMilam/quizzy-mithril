@@ -81,12 +81,19 @@
     return m("html", [
       m("head", [
         m("title", "Quizzy - Mithrilized"),
-        m("link", {rel: "stylesheet", href: "http://cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/css/foundation.css"})
+        m("link", {rel: "stylesheet", href: "http://cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/css/foundation.css"}),
+        m("link", {rel: "stylesheet", href: "public/css/quizzy.css"})
       ]),
       m("body", [
-        m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.stats.user), value: QuizzyApp.vm.stats.user()}),
-        m("div", {class: "questionsContainer"}, QuizzyApp.vm.questions.map(quizView)),
+        m(".userContainer", [
+          m("span", [
+            m("input", {id: "userName", placeHolder: "Enter name here", onchange: m.withAttr("value", QuizzyApp.vm.stats.user), value: QuizzyApp.vm.stats.user()}),
+          ]), // end span
+        ]), // end user container
+        m(".questionsContainer", QuizzyApp.vm.questions.map(quizView)),
+        m("div", [
         m("button", {onclick: QuizzyApp.vm.checkResponses.bind(QuizzyApp.vm, "checking responses")}, "Anwer Me!"),
+        ]),
         m(".statsContainer", [
           m("label", "High Score: "),
           m("label", QuizzyApp.vm.stats.highScore()),
@@ -99,7 +106,7 @@
     // helper function to generate a question and its responses
     function quizView (question) {
       return [
-        m("label", question.question),
+        m("strong", question.question),
         question.responses.map(function(resp, index) {
           return [
             m("tr", [
